@@ -1,6 +1,6 @@
-# Panda VDOM
+# HTML Render
 
-VDOM helpers for writing direct VDOM-based templates. Based on the excellent [diffHTML][1] library behind the scenes.
+HTML-as-code in plain CoffeeScript (or JavaScript, of course). Based on the excellent [diffHTML][1] library behind the scenes.
 
 [1]:https://github.com/tbranyen/diffhtml
 
@@ -19,4 +19,4 @@ assert.equal "<html><body><h1>Hello, World!</h1></body></html>",
 
 ## Installation
 
-`npm i panda-vdom`
+`npm i @dashkite/html-render`
