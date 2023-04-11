@@ -1,9 +1,8 @@
-import {createTree, html} from "diffhtml"
-import renderToString from "diffhtml-render-to-string"
+import { createTree, html as parse, toString as render } from "diffhtml"
 
 HTML =
-  parse: (s) -> [ html? s ]
-  render: (tree) -> renderToString tree
+  parse: (s) -> [ parse s ]
+  render: (tree) -> render tree
 
 el = (name) ->
   (rest...) -> createTree? name, rest...
@@ -24,7 +23,9 @@ do ->
 HTML.stylesheet = (url) ->
   HTML.link rel: "stylesheet", href: url
 
-SVG = {}
+SVG =
+  parse: (s) -> [ parse s ]
+  render: (tree) -> render tree
 
 do ->
   # source: https://www.w3.org/TR/SVG2/eltindex.html
