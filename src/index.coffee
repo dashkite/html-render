@@ -15,7 +15,7 @@ do ->
   h4 h5 h6 head header hr html i iframe img input ins kbd label legend li link
   main map mark menu meta meter nav noscript object ol optgroup option output p
   param pre progress q rp rt ruby samp script section select slot small source
-  span strong style sub sup table tbody td textarea tfoot th thead time title tr
+  span strong style sub summary sup table tbody td textarea tfoot th thead time title tr
   ul var video".split " "
 
   HTML[tag] = el tag for tag in tags
