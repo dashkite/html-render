@@ -1,21 +1,27 @@
-lockfileVersion: 5.4
+lockfileVersion: '6.0'
 
-specifiers:
-  '@dashkite/genie': link:../genie
-  '@dashkite/genie-coffee': link:../genie-coffee
-  '@dashkite/genie-modules': link:../genie-modules
-  diffhtml: 1.0.0-beta.20
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
 
 dependencies:
-  diffhtml: 1.0.0-beta.20
+  diffhtml:
+    specifier: 1.0.0-beta.20
+    version: 1.0.0-beta.20
 
 devDependencies:
-  '@dashkite/genie': link:../genie
-  '@dashkite/genie-coffee': link:../genie-coffee
-  '@dashkite/genie-modules': link:../genie-modules
+  '@dashkite/genie':
+    specifier: link:../genie
+    version: link:../genie
+  '@dashkite/genie-coffee':
+    specifier: link:../genie-coffee
+    version: link:../genie-coffee
+  '@dashkite/genie-modules':
+    specifier: link:../genie-modules
+    version: link:../genie-modules
 
 packages:
 
-  /diffhtml/1.0.0-beta.20:
+  /diffhtml@1.0.0-beta.20:
     resolution: {integrity: sha512-xSSwGb2dkQsTc7Bl910iySH65PkzsCtowfVGMfrmc2fEwvYrhJUpIEIx+3mpZ1wMWVt+t/0ltVwrjQkMJotxLg==}
     dev: false
