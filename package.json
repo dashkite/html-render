@@ -39,7 +39,7 @@
     "diffhtml": "1.0.0-beta.20"
   },
   "devDependencies": {
-    "@dashkite/genie": "link:../genie",
+    "@dashkite/genie": "^0.7.3",
     "@dashkite/genie-coffee": "link:../genie-coffee",
     "@dashkite/genie-modules": "link:../genie-modules"
   }
