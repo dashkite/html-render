@@ -46,3 +46,4 @@ do ->
   SVG[tag] = el tag for tag in tags
 
 export {el, HTML, SVG}
+export default HTML
