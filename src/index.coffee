@@ -5,7 +5,7 @@ HTML =
   render: (tree) -> render tree
 
 el = (name) ->
-  (rest...) -> createTree? name, rest...
+  (rest...) -> createTree name, rest...
 
 do ->
   # source: https://dev.w3.org/html5/html-author/#conforming-elements
@@ -22,6 +22,8 @@ do ->
 
 HTML.stylesheet = (url) ->
   HTML.link rel: "stylesheet", href: url
+
+HTML.tag = ( name, rest... ) -> createTree name, rest...
 
 SVG =
   parse: (s) -> [ parse s ]
