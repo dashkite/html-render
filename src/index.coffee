@@ -1,11 +1,22 @@
-import { createTree, html as parse, toString as render } from "diffhtml"
+import {
+  createTree
+  html as parse
+  toString as render 
+} from "diffhtml"
+
+_compact = ( value ) ->
+  if Array.isArray value
+    value.filter ( item ) -> item?
+  else value
+
+compact = ( values ) -> values.map _compact
 
 HTML =
-  parse: (s) -> [ parse s ]
-  render: (tree) -> render tree
+  parse: ( s ) -> [ parse s ]
+  render: ( tree ) -> render tree
 
-el = (name) ->
-  (rest...) -> createTree name, rest...
+el = ( name ) ->
+  ( rest...) -> createTree name, ( compact rest )...
 
 do ->
   # source: https://dev.w3.org/html5/html-author/#conforming-elements
@@ -18,16 +29,16 @@ do ->
   span strong style sub summary sup table tbody td textarea tfoot th thead time title tr
   ul var video".split " "
 
-  HTML[tag] = el tag for tag in tags
+  HTML[ tag ] = el tag for tag in tags
 
-HTML.stylesheet = (url) ->
+HTML.stylesheet = ( url ) ->
   HTML.link rel: "stylesheet", href: url
 
 HTML.tag = ( name, rest... ) -> createTree name, rest...
 
 SVG =
-  parse: (s) -> [ parse s ]
-  render: (tree) -> render tree
+  parse: ( s ) -> [ parse s ]
+  render: ( tree ) -> render tree
 
 do ->
   # source: https://www.w3.org/TR/SVG2/eltindex.html
@@ -47,5 +58,5 @@ do ->
 
   SVG[tag] = el tag for tag in tags
 
-export {el, HTML, SVG}
+export { el, HTML, SVG }
 export default HTML
