@@ -1,22 +1,41 @@
+import * as Type from "@dashkite/joy/type"
 import {
   createTree
   html as parse
   toString as render 
 } from "diffhtml"
 
-_compact = ( value ) ->
-  if Array.isArray value
-    value.filter ( item ) -> item?
-  else value
+compact = ( array ) -> array.filter ( item ) -> item?
 
-compact = ( values ) -> values.map _compact
+fromEntries = ( result, [ key, value ]) ->
+  result[ key ] = value
+  result
+
+compactObject = ( object ) ->
+  Object
+    .entries object
+    # diffHTML converts these into attributes with the key as the value
+    # or (in the case of false) "false"
+    .filter ([ key, value ]) -> value? && value != "" && value != false
+    # diffHTML convert true values into "true"
+    .map ([ key, value ]) ->
+      if value == true then [ key, key ] else [ key, value ]
+    .reduce fromEntries, {}
+
+preprocess = ( arg ) ->
+  if Type.isArray arg
+    compact arg
+  else if Type.isObject arg
+    compactObject arg
+  else arg
 
 HTML =
   parse: ( s ) -> [ parse s ]
   render: ( tree ) -> render tree
 
 el = ( name ) ->
-  ( rest...) -> createTree name, ( compact rest )...
+  ( args...) -> 
+    createTree name, ( args.map preprocess )...
 
 do ->
   # source: https://dev.w3.org/html5/html-author/#conforming-elements

@@ -36,6 +36,7 @@
   },
   "homepage": "https://github.com/dashkite/html-render#readme",
   "dependencies": {
+    "@dashkite/joy": "link:../joy",
     "diffhtml": "1.0.0-beta.20"
   },
   "devDependencies": {
