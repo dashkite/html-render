@@ -1,3 +1,4 @@
+import { generic } from "@dashkite/joy/generic"
 import * as Type from "@dashkite/joy/type"
 import {
   createTree
@@ -7,37 +8,96 @@ import {
 
 compact = ( array ) -> array.filter ( item ) -> item?
 
-fromEntries = ( result, [ key, value ]) ->
-  result[ key ] = value
+# convert nested object into a flat object (with scalar values)
+# where the keys are formed by concatenating them with -
+# ex: `foo: bar: 1` becomes `'foo-bar': 1`
+
+flattenObject = ( prefix, object ) ->
+  result = {}
+  for key, value of object
+    ckey = "#{ prefix }-#{ key }"
+    if Type.isObject value
+      Object.assign result,
+        flattenObject ckey, value
+    else
+      result[ ckey ] = value
   result
 
-compactObject = ( object ) ->
-  Object
-    .entries object
-    # diffHTML converts these into attributes with the key as the value
-    # or (in the case of false) "false"
-    .filter ([ key, value ]) -> value? && value != "" && value != false
-    # diffHTML convert true values into "true"
-    .map ([ key, value ]) ->
-      if value == true then [ key, key ] else [ key, value ]
-    .reduce fromEntries, {}
+# 'truthy' values
+isValid = ( value ) -> value? && value != "" && value != false
 
-preprocess = ( arg ) ->
-  if Type.isArray arg
-    compact arg
-  else if Type.isObject arg
-    compactObject arg
-  else arg
+prepare = generic name: "HTML._prepare"
+
+generic prepare,
+  Type.isObject,
+  ( attributes ) ->
+    result = {}
+    for key, value of attributes when isValid value
+      if value == true
+        result[ key ] = key
+      else if Type.isObject value
+        Object.assign result,
+          flattenObject key, value
+      else
+        result[ key ] = value
+    result
+      
+generic prepare,
+  Type.isArray,
+  ( content ) -> compact content
+
 
 HTML =
   parse: ( s ) -> [ parse s ]
   render: ( tree ) -> render tree
 
-el = ( name ) ->
-  ( args...) -> 
-    createTree name, ( args.map preprocess )...
+tag = generic name: "HTML.tag"
 
-do ->
+generic tag,
+  Type.isString,
+  ( name ) -> createTree name
+
+generic tag,
+  Type.isString,
+  Type.isArray,
+  ( name, content ) -> createTree name, prepare content
+
+generic tag,
+  Type.isString,
+  Type.isString,
+  ( name, content ) -> createTree name, content
+
+generic tag,
+  Type.isString,
+  Type.isObject,
+  ( name, attributes ) -> createTree name, prepare attributes
+
+generic tag,
+  Type.isString,
+  Type.isObject,
+  Type.isArray,
+  ( name, attributes, content ) ->  
+    createTree name, 
+      ( prepare attributes )
+      ( prepare content )
+
+generic tag,
+  Type.isString,
+  Type.isObject,
+  Type.isString,
+  ( name, attributes, content ) ->  
+    createTree name, 
+      ( prepare attributes )
+      content
+
+HTML.tag = tag
+
+el = ( name ) -> 
+  ( args... ) -> tag name, args...
+
+HTML.el = el
+
+do ({ tag } = {}) ->
   # source: https://dev.w3.org/html5/html-author/#conforming-elements
   tags = "a abbr address area article aside audio b base bb bdo blockquote body
   br button canvas caption cite code col colgroup command datagrid datalist dd
@@ -48,18 +108,17 @@ do ->
   span strong style sub summary sup table tbody td textarea tfoot th thead time title tr
   ul var video".split " "
 
-  HTML[ tag ] = el tag for tag in tags
+  for tag in tags
+    HTML[ tag ] = el tag
 
 HTML.stylesheet = ( url ) ->
   HTML.link rel: "stylesheet", href: url
-
-HTML.tag = ( name, rest... ) -> createTree name, rest...
 
 SVG =
   parse: ( s ) -> [ parse s ]
   render: ( tree ) -> render tree
 
-do ->
+do ({ tag } = {}) ->
   # source: https://www.w3.org/TR/SVG2/eltindex.html
   tags = "a altGlyph altGlyphDef altGlyphItem animate animateColor animateMotion
   animateTransform animation audio canvas circle clipPath color-profile cursor
@@ -75,7 +134,8 @@ do ->
   script set solidColor solidcolor stop style svg switch symbol tbreak text
   textArea textPath title tref tspan unknown use video view vkern".split " "
 
-  SVG[tag] = el tag for tag in tags
+  for tag in tags
+    SVG[tag] = el tag 
 
 export { el, HTML, SVG }
 export default HTML
