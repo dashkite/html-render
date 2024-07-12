@@ -69,6 +69,11 @@ generic tag,
 
 generic tag,
   Type.isString,
+  Type.isUndefined,
+  ( name ) -> createTree name, ""
+
+generic tag,
+  Type.isString,
   Type.isObject,
   ( name, attributes ) -> createTree name, prepare attributes
 
@@ -89,6 +94,15 @@ generic tag,
     createTree name, 
       ( prepare attributes )
       content
+
+generic tag,
+  Type.isString,
+  Type.isObject,
+  Type.isUndefined,
+  ( name, attributes ) ->  
+    createTree name, 
+      ( prepare attributes ),
+      ""
 
 HTML.tag = tag
 
