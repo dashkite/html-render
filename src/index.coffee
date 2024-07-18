@@ -98,6 +98,15 @@ generic tag,
 generic tag,
   Type.isString,
   Type.isObject,
+  Type.isObject,
+  ( name, attributes, content ) ->  
+    createTree name, 
+      ( prepare attributes ),
+      [ content ]
+
+generic tag,
+  Type.isString,
+  Type.isObject,
   Type.isUndefined,
   ( name, attributes ) ->  
     createTree name, 
