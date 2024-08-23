@@ -39,7 +39,7 @@ generic prepare,
         Object.assign result,
           flattenObject key, value
       else
-        result[ key ] = value
+        result[ key ] = "#{ value }"
     result
       
 generic prepare,
