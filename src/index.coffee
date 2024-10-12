@@ -46,7 +46,6 @@ generic prepare,
   Type.isArray,
   ( content ) -> compact content
 
-
 HTML =
   parse: ( s ) -> [ parse s ]
   render: ( tree ) -> render tree
