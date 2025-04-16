@@ -10,7 +10,7 @@ Attributes =
     result = {}
     for key, value of Obj.collapse delimiter: "-", attributes
       if value == true
-        result[ key ] = key
+        result[ key ] = ""
       else if value? && value != "" && value != false
         result[ key ] = value
     result
@@ -50,7 +50,7 @@ HTML =
       .define [ String ], ( name ) -> 
         tag name, {}, []
 
-      .define [ String, undefined ], ( name, content ) ->
+      .define [ String, (( x ) -> !x? )], ( name, content ) ->
         tag name, {}, []
 
       .define [ String, Object ], ( name, attributes ) ->
@@ -71,7 +71,7 @@ HTML =
       .define [ String, Object, Node ], ( name, attributes, content ) ->
         tag name, attributes, [ content ]
 
-      .define [ String, Object, undefined ], ( name, attributes, content ) ->
+      .define [ String, Object, (( x ) -> !x? )], ( name, attributes, content ) ->
         tag name, attributes, []
 
       .define [ String, Object, Array ], ( name, attributes, content ) -> 
