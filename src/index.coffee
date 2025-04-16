@@ -1,123 +1,88 @@
-import { generic } from "@dashkite/joy/generic"
-import * as Type from "@dashkite/joy/type"
-import {
-  createTree
-  html as parse
-  toString as render 
-} from "diffhtml"
+import Generic from "@dashkite/generic"
+import * as Fn from "@dashkite/joy/function"
+import * as Obj from "@dashkite/joy/object"
 
-compact = ( array ) -> array.filter ( item ) -> item?
+# TODO allow use on server-side
 
-# convert nested object into a flat object (with scalar values)
-# where the keys are formed by concatenating them with -
-# ex: `foo: bar: 1` becomes `'foo-bar': 1`
+Attributes = 
 
-flattenObject = ( prefix, object ) ->
-  result = {}
-  for key, value of object
-    ckey = "#{ prefix }-#{ key }"
-    if Type.isObject value
-      Object.assign result,
-        flattenObject ckey, value
-    else
-      result[ ckey ] = value
-  result
-
-# 'truthy' values
-isValid = ( value ) -> value? && value != "" && value != false
-
-prepare = generic name: "HTML._prepare"
-
-generic prepare,
-  Type.isObject,
-  ( attributes ) ->
+  normalize: ( attributes ) ->
     result = {}
-    for key, value of attributes when isValid value
+    for key, value of Obj.collapse delimiter: "-", attributes
       if value == true
         result[ key ] = key
-      else if Type.isObject value
-        Object.assign result,
-          flattenObject key, value
-      else
-        result[ key ] = "#{ value }"
+      else if value? && value != "" && value != false
+        result[ key ] = value
     result
-      
-generic prepare,
-  Type.isArray,
-  ( content ) -> compact content
+
+Text =
+
+  parse: ( text ) ->
+    Document
+      .parseHTMLUnsafe text
+      .body
+      .textContent
+
+Content =
+
+  normalize: do ->
+    
+    ( Generic.make "<private> Context.normalize" )
+    
+      .define [ Array ], ( values ) ->
+        ( Content.normalize value ) for value in values when value?
+      .define [ Node ], Fn.identity
+      .define [ String ], Text.parse
+
 
 HTML =
-  parse: ( s ) -> [ parse s ]
-  render: ( tree ) -> render tree
+  parse: ( html ) -> 
+    Array.from do ->
+      Document
+        .parseHTMLUnsafe html
+        .body
+        .children
 
-tag = generic name: "HTML.tag"
+  tag: tag = do ->
 
-generic tag,
-  Type.isString,
-  ( name ) -> createTree name
+    ( Generic.make "tag" )
 
-generic tag,
-  Type.isString,
-  Type.isArray,
-  ( name, content ) -> createTree name, prepare content
+      .define [ String ], ( name ) -> 
+        tag name, {}, []
 
-generic tag,
-  Type.isString,
-  Type.isString,
-  ( name, content ) -> createTree name, content
+      .define [ String, undefined ], ( name, content ) ->
+        tag name, {}, []
 
-generic tag,
-  Type.isString,
-  Type.isUndefined,
-  ( name ) -> createTree name, ""
+      .define [ String, Object ], ( name, attributes ) ->
+        tag name, attributes, []
 
-generic tag,
-  Type.isString,
-  Type.isObject,
-  ( name, attributes ) -> createTree name, prepare attributes
+      .define [ String, Array ], ( name, content ) -> 
+        tag name, {}, content
 
-generic tag,
-  Type.isString,
-  Type.isObject,
-  Type.isArray,
-  ( name, attributes, content ) ->  
-    createTree name, 
-      ( prepare attributes )
-      ( prepare content )
+      .define [ String, String ], ( name, content ) ->
+        tag name, {}, [ content ]
 
-generic tag,
-  Type.isString,
-  Type.isObject,
-  Type.isString,
-  ( name, attributes, content ) ->  
-    createTree name, 
-      ( prepare attributes )
-      content
+      .define [ String, Node ], ( name, content ) ->
+        tag name, {}, [ content ]
 
-generic tag,
-  Type.isString,
-  Type.isObject,
-  Type.isObject,
-  ( name, attributes, content ) ->  
-    createTree name, 
-      ( prepare attributes ),
-      [ content ]
+      .define [ String, Object, String ], ( name, attributes, content ) ->
+        tag name, attributes, [ content ]
 
-generic tag,
-  Type.isString,
-  Type.isObject,
-  Type.isUndefined,
-  ( name, attributes ) ->  
-    createTree name, 
-      ( prepare attributes ),
-      ""
+      .define [ String, Object, Node ], ( name, attributes, content ) ->
+        tag name, attributes, [ content ]
 
-HTML.tag = tag
+      .define [ String, Object, undefined ], ( name, attributes, content ) ->
+        tag name, attributes, []
 
-el = ( name ) -> 
-  ( args... ) -> tag name, args...
+      .define [ String, Object, Array ], ( name, attributes, content ) -> 
+        element = document.createElement name
+        for key, value of ( Attributes.normalize attributes )
+          element.setAttribute key, value
+        element.replaceChildren ( Content.normalize content )...
+        element
 
-HTML.el = el
+  el: ( name ) -> 
+    ( args... ) -> HTML.tag name, args...
 
 do ({ tag } = {}) ->
   # source: https://dev.w3.org/html5/html-author/#conforming-elements
@@ -131,14 +96,10 @@ do ({ tag } = {}) ->
   ul var video".split " "
 
   for tag in tags
-    HTML[ tag ] = el tag
-
-HTML.stylesheet = ( url ) ->
-  HTML.link rel: "stylesheet", href: url
+    HTML[ tag ] = HTML.el tag
 
 SVG =
-  parse: ( s ) -> [ parse s ]
-  render: ( tree ) -> render tree
+  parse: HTML.parse
 
 do ({ tag } = {}) ->
   # source: https://www.w3.org/TR/SVG2/eltindex.html
@@ -157,7 +118,9 @@ do ({ tag } = {}) ->
   textArea textPath title tref tspan unknown use video view vkern".split " "
 
   for tag in tags
-    SVG[tag] = el tag 
+    SVG[tag] = HTML.el tag 
 
-export { el, HTML, SVG }
+
+
+export { HTML, SVG }
 export default HTML

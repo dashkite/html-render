@@ -8,12 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@dashkite/generic':
+        specifier: link:../generic
+        version: link:../generic
       '@dashkite/joy':
         specifier: link:../joy
         version: link:../joy
-      diffhtml:
-        specifier: 1.0.0-beta.20
-        version: 1.0.0-beta.20
     devDependencies:
       '@dashkite/genie':
         specifier: ^0.8.4
@@ -167,9 +167,6 @@ packages:
 
   dayjs@1.11.11:
     resolution: {integrity: sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==}
-
-  diffhtml@1.0.0-beta.20:
-    resolution: {integrity: sha512-xSSwGb2dkQsTc7Bl910iySH65PkzsCtowfVGMfrmc2fEwvYrhJUpIEIx+3mpZ1wMWVt+t/0ltVwrjQkMJotxLg==}
 
   fast-glob@3.3.2:
     resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
@@ -356,8 +353,6 @@ snapshots:
   commander@11.1.0: {}
 
   dayjs@1.11.11: {}
-
-  diffhtml@1.0.0-beta.20: {}
 
   fast-glob@3.3.2:
     dependencies:
