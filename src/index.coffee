@@ -9,9 +9,9 @@ Attributes =
   normalize: ( attributes ) ->
     result = {}
     for key, value of Obj.collapse delimiter: "-", attributes
-      if value == true
+      if ( value == true ) || ( value == key ) || ( value == "" )
         result[ key ] = ""
-      else if value? && value != "" && value != false
+      else if ( value? ) && ( value != "" ) && ( value != false )
         result[ key ] = value
     result
 
