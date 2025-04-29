@@ -4,6 +4,9 @@ import * as Obj from "@dashkite/joy/object"
 
 # TODO allow use on server-side
 
+nil = ( x ) -> !x?
+renderable = ( x ) -> x.toString?
+
 Attributes = 
 
   normalize: ( attributes ) ->
@@ -50,7 +53,10 @@ HTML =
       .define [ String ], ( name ) -> 
         tag name, {}, []
 
-      .define [ String, (( x ) -> !x? )], ( name, content ) ->
+      .define [ String, renderable ], ( name, content ) ->
+        tag name, {}, content.toString()
+
+      .define [ String, nil ], ( name, content ) ->
         tag name, {}, []
 
       .define [ String, Object ], ( name, attributes ) ->
@@ -65,14 +71,17 @@ HTML =
       .define [ String, Node ], ( name, content ) ->
         tag name, {}, [ content ]
 
+      .define [ String, Object, renderable ], ( name, attributes, content ) ->
+        tag name, attributes, content.toString()
+
+      .define [ String, Object, nil ], ( name, attributes, content ) ->
+        tag name, attributes, []
+
       .define [ String, Object, String ], ( name, attributes, content ) ->
         tag name, attributes, [ content ]
 
       .define [ String, Object, Node ], ( name, attributes, content ) ->
         tag name, attributes, [ content ]
-
-      .define [ String, Object, (( x ) -> !x? )], ( name, attributes, content ) ->
-        tag name, attributes, []
 
       .define [ String, Object, Array ], ( name, attributes, content ) -> 
         element = document.createElement name
