@@ -2,7 +2,6 @@ import Generic from "@dashkite/generic"
 import * as Fn from "@dashkite/joy/function"
 import * as Obj from "@dashkite/joy/object"
 
-# TODO allow use on server-side
 
 nil = ( x ) -> !x?
 renderable = ( x ) -> x.toString?
