@@ -1,5 +1,5 @@
 {
-  "name": "@dashkite/html-render",
+  "name": "@dashkite/domo",
   "version": "0.0.0",
   "description": "HTML-as-code in plain CoffeeScript or JavaScript",
   "files": [
@@ -22,7 +22,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dashkite/html-render.git"
+    "url": "git+https://github.com/dashkite/domo.git"
   },
   "keywords": [
     "vdom",
@@ -32,9 +32,9 @@
   "author": "Dan Yoder",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dashkite/html-render/issues"
+    "url": "https://github.com/dashkite/domo/issues"
   },
-  "homepage": "https://github.com/dashkite/html-render#readme",
+  "homepage": "https://github.com/dashkite/domo#readme",
   "dependencies": {
     "@dashkite/generic": "link:../generic",
     "@dashkite/joy": "link:../joy"

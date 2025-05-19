@@ -1,22 +1,20 @@
-# HTML Render
+# Domo
 
-HTML-as-code in plain CoffeeScript (or JavaScript, of course). Based on the excellent [diffHTML][1] library behind the scenes.
-
-[1]:https://github.com/tbranyen/diffhtml
+_Construct DOM trees programmatically in JavaScript._
 
 ```coffee
-import {HTML} from "../src/index"
-{render, html, body, h1} = HTML
+import H from "@dashkite/domo"
 
-assert.equal "<html><body><h1>Hello, World!</h1></body></html>",
-  render html [
-    body [
-      h1 "Hello, World!"
+tree = H.html [
+    H.body [
+      H.h1 "Hello, World!"
     ]
   ]
 
+assert.equal tree.innerHTML,
+	"<html><body><h1>Hello, World!</h1></body></html>"
 ```
 
 ## Installation
 
-`npm i @dashkite/html-render`
+`npm i @dashkite/domo`

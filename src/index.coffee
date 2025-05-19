@@ -18,23 +18,25 @@ Attributes =
     result
 
 Text =
-
-  parse: ( text ) ->
+  # This preserves treatment of HTML entities and other
+  # oddities of HTML formatting, while de facto escaping
+  # any HTML tags...
+  escape: ( text ) ->
     Document
       .parseHTMLUnsafe text
       .body
-      .textContent
+      .innerHTML
 
 Content =
 
   normalize: do ->
     
-    ( Generic.make "<private> Context.normalize" )
+    ( Generic.make "<private> Content.normalize" )
     
       .define [ Array ], ( values ) ->
         ( Content.normalize value ) for value in values when value?
       .define [ Node ], Fn.identity
-      .define [ String ], Text.parse
+      .define [ String ], Text.escape
 
 
 HTML =
