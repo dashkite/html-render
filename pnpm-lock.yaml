@@ -25,13 +25,13 @@ importers:
         specifier: link:../genie-coffee
         version: link:../genie-coffee
       '@dashkite/genie-release':
-        specifier: ^0.2.6
-        version: 0.2.6
+        specifier: ^0.2.10
+        version: 0.2.10
 
 packages:
 
-  '@dashkite/genie-release@0.2.6':
-    resolution: {integrity: sha512-mmZ5xwWvxjoUsTH+Kez3elNRD/V176EBzbCy6G4P/y1OT/GwSTP8g+YKj68eU8ktgVINpmONNBSDbyX+4rCrDQ==}
+  '@dashkite/genie-release@0.2.10':
+    resolution: {integrity: sha512-8pczG/SY+Nbstl+cIc9s0+tsNewNTyNfi60g7RHvpzxe6Qd2/WUCIfmFqcF39CAUVlAq94+6M29vhDOwPlLk/Q==}
 
   '@dashkite/genie@0.8.4':
     resolution: {integrity: sha512-f4c84JoTaIoEvSwwre9lOD4V1/AHMp9prIeiJrD4/hRWiGcO+HYqjzjK7mNA2kfq68K/I3y9F5QYhlaG8QpCYA==}
@@ -250,7 +250,7 @@ packages:
 
 snapshots:
 
-  '@dashkite/genie-release@0.2.6':
+  '@dashkite/genie-release@0.2.10':
     dependencies:
       '@dashkite/zephyr': 0.2.0
       zx: 8.7.0
