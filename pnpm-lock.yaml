@@ -24,9 +24,6 @@ importers:
       '@dashkite/genie-coffee':
         specifier: link:../genie-coffee
         version: link:../genie-coffee
-      '@dashkite/genie-module':
-        specifier: link:../genie-module
-        version: link:../genie-module
       '@dashkite/genie-release':
         specifier: ^0.2.6
         version: 0.2.6
