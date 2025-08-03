@@ -43,7 +43,7 @@
   "devDependencies": {
     "@dashkite/genie": "^0.20.8",
     "@dashkite/genie-clean": "^0.13.4",
-    "@dashkite/genie-coffee": "^0.13.4",
+    "@dashkite/genie-coffee": "^0.13.5",
     "@dashkite/genie-release": "^0.4.3"
   }
 }
