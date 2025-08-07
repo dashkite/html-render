@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@dashkite/generic':
-        specifier: ^0.9.7
-        version: 0.9.7
+        specifier: ^0.9.8
+        version: 0.9.8
       '@dashkite/joy':
         specifier: ^0.11.0
         version: 0.11.0
@@ -577,8 +577,8 @@ packages:
     resolution: {integrity: sha512-ruv7Ae4J5dUYULmeXw1gmb7rYRz57OWCPM57pHojnLq/3Z1CK2lNSLTCVjxVk1F/TZHwOZZrOWi0ur95BbLxNQ==}
     engines: {node: '>=6.9.0'}
 
-  '@dashkite/generic@0.9.7':
-    resolution: {integrity: sha512-k6P+4GNiCqlRWeWGKNPKvghl0xbY9Fh2HVBdFBkox5pWX574Wl+TaHmeVpskv0eHUh66SBMtdaxM0uaZgDUtXw==}
+  '@dashkite/generic@0.9.8':
+    resolution: {integrity: sha512-7Hc6Rs59Ozj3uTK6kt1EBgiYbh50rmY7e41IOAxpcvlHoaWUOYSFMflhQ5YWevSOXJtXiwCwr/NLTcYpV+iGJg==}
 
   '@dashkite/genie-clean@0.13.8':
     resolution: {integrity: sha512-8tMLVyCEM9poQSHvpzfqXMHUi0OJl/6Xn1ssQ/bzFW4jFif3LCEsBbAvuU/3qYwtZI81ZZC0N5p4ioHx4BCMsg==}
@@ -2096,7 +2096,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.27.1
 
-  '@dashkite/generic@0.9.7':
+  '@dashkite/generic@0.9.8':
     dependencies:
       '@dashkite/joy': 0.7.0
 
