@@ -42,8 +42,8 @@
   },
   "devDependencies": {
     "@dashkite/genie": "^0.20.11",
-    "@dashkite/genie-clean": "^0.13.8",
-    "@dashkite/genie-coffee": "^0.13.9",
+    "@dashkite/genie-clean": "^0.13.9",
+    "@dashkite/genie-coffee": "^0.13.10",
     "@dashkite/genie-release": "^0.4.3"
   }
 }
