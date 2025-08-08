@@ -37,14 +37,14 @@
   },
   "homepage": "https://github.com/dashkite/domo#readme",
   "dependencies": {
-    "@dashkite/generic": "^0.9.13",
+    "@dashkite/generic": "^0.9.14",
     "@dashkite/joy": "^0.11.0"
   },
   "devDependencies": {
     "@dashkite/genie": "^0.20.13",
     "@dashkite/genie-clean": "^0.13.11",
     "@dashkite/genie-coffee": "^0.13.13",
-    "@dashkite/genie-module": "^0.5.38",
+    "@dashkite/genie-module": "^0.5.39",
     "@dashkite/genie-release": "^0.5.0"
   }
 }
