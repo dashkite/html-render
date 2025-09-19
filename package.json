@@ -1,6 +1,6 @@
 {
   "name": "@dashkite/domo",
-  "version": "0.2.19",
+  "version": "0.2.20",
   "description": "HTML-as-code in plain CoffeeScript or JavaScript",
   "files": [
     "build/browser/src",
