@@ -38,13 +38,13 @@
   "homepage": "https://github.com/dashkite/domo#readme",
   "dependencies": {
     "@dashkite/generic": "^0.9.31",
-    "@dashkite/joy": "^0.11.0"
+    "@dashkite/joy": "0.12.40"
   },
   "devDependencies": {
     "@dashkite/genie": "^0.20.26",
     "@dashkite/genie-clean": "^0.13.25",
     "@dashkite/genie-coffee": "^0.13.28",
-    "@dashkite/genie-module": "^0.5.55",
+    "@dashkite/genie-module": "0.5.56",
     "@dashkite/genie-release": "^0.5.16"
   }
 }
